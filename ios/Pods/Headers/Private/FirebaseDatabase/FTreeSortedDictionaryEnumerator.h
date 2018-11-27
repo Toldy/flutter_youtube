@@ -1,9 +1,1 @@
-#import <Foundation/Foundation.h>
-#import "FTreeSortedDictionary.h"
-
-@interface FTreeSortedDictionaryEnumerator : NSEnumerator
-
-- (id)initWithImmutableSortedDictionary:(FTreeSortedDictionary *)aDict startKey:(id)startKey isReverse:(BOOL)reverse;
-- (id)nextObject;
-
-@end
+../../../FirebaseDatabase/Firebase/Database/third_party/FImmutableSortedDictionary/FImmutableSortedDictionary/FTreeSortedDictionaryEnumerator.h
