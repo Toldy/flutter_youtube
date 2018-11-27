@@ -11,11 +11,6 @@ class HomeView extends StatefulWidget {
 
 class _HomeView extends State<HomeView> {
 
-    List<VideoModel> _videos = [
-        VideoModel("images/video_1.png", "RESPECT PIKACHU - POKEMON LET'S GO #1", "JirayaTV", "", "", null),
-        VideoModel("images/video_2.png", "Chamonix, la fabrique de l'extreme", "émissions RMC", "", "", null),
-    ];
-
     @override
     Widget build(BuildContext context) {
         return Stack(children: <Widget>[
@@ -26,17 +21,13 @@ class _HomeView extends State<HomeView> {
                     switch (snapshot.connectionState) {
                         case ConnectionState.waiting: return new Text('Loading...');
                         default:
-                            final count = snapshot.data.documents.length;
-
                             return ListView.builder(
-                                    itemCount: count,
+                                    itemCount: snapshot.data.documents.length,
                                     itemBuilder: (BuildContext context, int index) {
                                         final document = snapshot.data.documents[index];
                                         final model = VideoModel.fromSnapshot(document);
 
-                                        print(model);
-
-                                        return VideoCard(video: _videos[index]);
+                                        return VideoCard(video: model);
                                     });
                     }
                 },
@@ -87,22 +78,21 @@ class VideoCard extends StatelessWidget {
             ],
         );
 
-        return
-            Container(
-                    decoration:
-                    new BoxDecoration(
-                            border: new Border(
-                                    bottom: new BorderSide(color: Color(0x88888866))
-                            )
-                    ),
+        return Container(
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(color: Color(0x88888866)),
+                ),
+            ),
+            child: GestureDetector(
                     child: Padding(
                             padding: EdgeInsets.all(12.0),
                             child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.stretch,
                                     children:
                                     <Widget>[
-                                        Image.asset(
-                                            video.image,
+                                        Image.network(
+                                            video.thumbnailUrl,
                                             fit: BoxFit.cover,
                                         ),
                                         Container(
@@ -110,7 +100,32 @@ class VideoCard extends StatelessWidget {
                                                 child: titleSection),
                                     ]
                             )
-                    )
-            );
+                    ),
+                    onTap: () => _onItemTapped(video, context)
+            ),
+        );
+    }
+
+    _onItemTapped(VideoModel video, BuildContext context) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SecondScreen(video: video)),
+        );
+    }
+}
+class SecondScreen extends StatelessWidget {
+
+    final VideoModel video;
+
+    const SecondScreen({Key key, @required this.video}) : super(key: key);
+
+    @override
+    Widget build(BuildContext context) {
+        return Scaffold(
+            appBar: AppBar(
+                title: Text("Second Screen"),
+            ),
+            body: VideoCard(video: video),
+        );
     }
 }
