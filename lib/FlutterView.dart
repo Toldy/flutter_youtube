@@ -30,7 +30,6 @@ class _FlutterView extends State<FlutterView> {
     }
 
     void _sendFlutterIncrement() {
-        //    platform.send(_pong);
         setState(() {
             _counter++;
         });

@@ -38,14 +38,6 @@ class _HomeView extends State<HomeView> {
 
                                         return VideoCard(video: _videos[index]);
                                     });
-                            return ListView(
-                                children: snapshot.data.documents.map((DocumentSnapshot document) {
-                                    return new ListTile(
-                                        title: new Text(document['title']),
-                                        subtitle: new Text(document['author']),
-                                    );
-                                }).toList(),
-                            );
                     }
                 },
             ),
@@ -62,39 +54,37 @@ class VideoCard extends StatelessWidget {
 
     @override
     Widget build(BuildContext context) {
-        Widget titleSection = Container(
-            child: Row(
-                children: [
-                    CircleAvatar(),
-                    Container(width: 12),
-                    Expanded(
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                                Container(
-                                    padding: const EdgeInsets.only(bottom: 8.0),
-                                    child: Text(
-                                        video.title,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                        ),
-                                    ),
-                                ),
-                                Text(
-                                    video.author,
+        Widget titleSection = Row(
+            children: [
+                CircleAvatar(),
+                Container(width: 12),
+                Expanded(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                            Container(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: Text(
+                                    video.title,
                                     style: TextStyle(
-                                        color: Colors.grey[500],
+                                        fontWeight: FontWeight.bold,
                                     ),
                                 ),
-                            ],
-                        ),
+                            ),
+                            Text(
+                                video.author,
+                                style: TextStyle(
+                                    color: Colors.grey[500],
+                                ),
+                            ),
+                        ],
                     ),
-                    Icon(
-                        Icons.more_vert,
-                        color: Colors.grey[500],
-                    ),
-                ],
-            ),
+                ),
+                Icon(
+                    Icons.more_vert,
+                    color: Colors.grey[500],
+                ),
+            ],
         );
 
         return
